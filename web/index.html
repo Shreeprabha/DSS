@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Decision Support System for Project">
+<meta name="author" content="Shreeprabha Aggarwal">
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<title>Decision Support System</title>
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/layout.css" rel="stylesheet">
+<link href="css/red-theme/jqury-ui-1.10.3.custom.css" rel="stylesheet">
+<link href="css/font-awesome.css" rel="stylesheet">
+
+<script type="text/javascript" src="js/rating.js"></script>
+<script type="text/javascript" src="js/validation.js"></script>
+
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.js"></script>
+
+<script type="text/javascript">
+	function green() {
+		$('.jumbotron').removeClass("page1");
+		$('.jumbotron').addClass("page2");
+	}
+
+	function yellow() {
+		$('.jumbotron').removeClass("page2");
+		$('.jumbotron').addClass("page1");
+	}
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('.jumbotron').children().each(function() {
+
+			$(this).fadeOut(0);
+			$(this).css("position", 'absolute');
+
+		});
+
+		$('#home').fadeIn(1000);
+		$('#home').css("position", 'static');
+
+		$(".clear a").click(function() {
+			var x = $(this).attr("href");
+			$('.jumbotron').children().each(function() {
+				$(this).fadeOut(0);
+				$(this).css("position", 'absolute');
+			});
+
+			$(x).fadeIn(1000);
+			$(x).css("visibility", 'visible');
+			$(x).css("position", 'static');
+
+		});
+
+		$(".op > *").hide();
+
+		function updateLinks(link, links) {
+
+			var block = link.attr("data-block");
+			$("a[data-block!='" + block + "']").parent().removeClass("active");
+			$("a[data-block='" + block + "']").parent().addClass("active");
+
+			$(".op > *").hide();
+			$("#" + block).show();
+		}
+
+		var links = $("a[data-block]");
+		if (window.location.hash != "") {
+			var link = $("a[href='" + window.location.hash + "']");
+			if (link.length > 0) {
+				updateLinks(link, links);
+			}
+		}
+
+		links.click(function() {
+			var divId = $(this).attr("href");
+			var state = {
+				prevhash : divId
+			};
+			if (window.history.pushState) {
+				window.history.pushState(state, $(this).html(), divId);
+			}
+
+			updateLinks($(this), links);
+			return false;
+		});
+
+		if (window.history.pushState) {
+			window.onpopstate = function(e) {
+				if (e.state) {
+					var link = $("a[href='" + window.location.hash + "']");
+					updateLinks(link, links);
+				} else {
+					$(".op > *").hide();
+					$("a[data-block]").parent().removeClass("active");
+				}
+			};
+		}
+
+	});
+</script>
+
+<script>
+	
+</script>
+
+</head>
+
+<body>
+
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav clear">
+					<li><a href="#home" onclick="yellow()">HOME</a></li>
+					<li><a href="#calculator" onclick="green()">CALCULATOR</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="jumbotron page1">
+			<div id="home" class="row">
+				Decision Support System Tool for calculating Soil Physical Rating
+				Index
+				<div class="span3">
+					<div class="well sidebar-nav">
+						<ul class="nav nav-list">
+							<li class="nav-header">Project</li>
+							<li><a href="#soil" data-block="soil">Aim</a></li>
+							<li><a href="#table1" data-block="table1">Table1</a></li>
+							<li><a href="#table2" data-block="table2">Table2</a></li>
+						</ul>
+						<ul class="nav nav-list">
+							<li class="nav-header">Researchers</li>
+							<li><a href="#pramila" data-block="pramila">Principal
+									Investigator</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="op span3">
+					<div id="soil" class="sidebar-container">
+						<h3>Soil Physical Health Assessment</h3>
+						<p>Methodology for computing soil physical health index: Soil
+							physical rating score chart by Gupta and Abrol (1993) was used
+							for rating different soil physical parameters. Scores for
+							different soil parameters were given as per the rating table 1 and table 2
+							for both upland crop and lowland rice. In these tables three imporant 
+                                                     soil parameters namely soil depth, depth of water table and land slope have 
+                                                     not been mentioned  as in the surveyed area soils were deep(>1m), depth of  water table was>1.5m and 
+                                                     land slopes were <2%. The parameters considered for computing soil physical health assessment were 
+                                                     Bulk density ( BD in Mgm<sup>-3</sup>), saturated hydraulic conductivity ( Sat HC in cm h<sup>-1</sup>),
+                                                     available water retention capacity (AWRCin cm m<sup>-1</sup>), organic carbon ( OC in %) and 
+                                                     noncapillary pores(NCP in %) .   </p>  
+                                                   	<p>The above rating chart was prepared by analyzing the soil
+							physical and yield data of 30 years of research experiments
+							reported in All India coordinated research project on
+							&lsquo;Improvement of soil physical conditions to increase
+							agricultural production of problematic areas&rsquo;. These
+							experiments were conducted for different cropping systems at
+							various locations with different soil types and agro climatic
+							zones. Same ranges of soil parameters were assigned different
+							rating values under rice and wheat cultivations because optimum
+							soil physical environment required for their growth were
+							different.</p>
+						<p>For a given site, each of these parameters was assigned a
+							rating value corresponding to its actual value by referring to
+							rating chart. Each of this parameter was given a score of 1 if
+							the parameter value lies within the optimum range. If the value
+							lies below or above the critical limit, a score less than 1 were
+							given. Greater the deviation of parameter value from optimum
+							range, lesser the score given to it. The product of rating values
+							of all the eight parameters gave the physical rating index (PI).
+							PI was an indicator of overall soil physical health status. For
+							range of PI &gt;0.75, 0.50-0.75, 0.25-0.50 and &lt;0.25, soil
+							physical health status and accordingly its production potential
+							could be labeled as very good, good, medium or poor,
+							respectively.</p>
+					</div>
+					<div id="table1" class="sidebar-container">
+						<table>
+							<caption>Table 1</caption>
+							<tr>
+								<th colspan="3">BD (Mgm<sup>-3</sup>)
+								</th>
+								<th colspan="2">Sat HC (cm h<sup>-1</sup>)
+								</th>
+								<th colspan="2">AWRC (cm m<sup>-1</sup>)
+								</th>
+								<th colspan="2">OC (%)</th>
+								<th colspan="2">NCP (%)</th>
+							</tr>
+							<tr>
+								<th>Range</th>
+								<th>Rating:<br />coarse<br />texture
+								</th>
+								<th>Rating:<br />fine<br />texture
+								</th>
+								<th>Range</th>
+								<th>Rating</th>
+								<th>Range</th>
+								<th>Rating</th>
+								<th>Range</th>
+								<th>Rating</th>
+								<th>Range</th>
+								<th>Rating</th>
+							</tr>
+							<tr>
+								<td>1.00-1.20</td>
+								<td>0.70</td>
+								<td>0.8</td>
+								<td>>70</td>
+								<td>0.6</td>
+								<td>&gt;15.0</td>
+								<td>1.00</td>
+								<td>&gt;1.20</td>
+								<td>1.00</td>
+								<td>&gt;15.00</td>
+								<td>0.90</td>
+							</tr>
+							<tr>
+								<td>1.20-1.30</td>
+								<td>0.8</td>
+								<td>0.9</td>
+								<td>50-70</td>
+								<td>0.7</td>
+								<td>12.5-15.0</td>
+								<td>0.95</td>
+								<td>0.90-1.20</td>
+								<td>0.95</td>
+								<td>12.50-15.00</td>
+								<td>1.00</td>
+							</tr>
+							<tr>
+								<td>1.3-1.45</td>
+								<td>0.9</td>
+								<td>1.0</td>
+                                                                <td>30-50</td> 
+                                                                <td>0.08</td>
+								<td>10.0-12.5</td>
+								<td>0.90</td>
+								<td>0.60-0.90</td>
+								<td>0.90</td>
+								<td>10.00-12.5</td>
+								<td>0.90</td>
+							</tr>
+							<tr>
+								<td>1.45-1.50</td>
+								<td>1.00</td>
+								<td>0.95</td>
+								<td>3-30</td>
+								<td>0.9</td>
+								<td>7.5-10.0</td>
+								<td>0.80</td>
+								<td>0.45-0.60</td>
+								<td>0.85</td>
+								<td>7.5-10.00</td>
+								<td>0.80</td>
+							</tr>
+							<tr>
+								<td>1.50-1.55</td>
+								<td>1.0</td>
+								<td>0.90</td>
+								<td>1-3</td>
+								<td>1.0</td>
+								<td>5.0-7.5</td>
+								<td>0.75</td>
+								<td>0.30-0.45</td>
+								<td>0.80</td>
+								<td>5.00-7.50</td>
+								<td>0.70</td>
+							</tr>
+							<tr>
+								<td>1.55-1.60</td>
+								<td>1</td>
+								<td>0.85</td>
+								<td>0.5-1.0</td>
+								<td>0.95</td>
+								<td>2.5-5.0</td>
+								<td>0.70</td>
+								<td>0.20-0.30</td>
+								<td>0.75</td>
+								<td>2.5-5.00</td>
+								<td>0.65</td>
+							</tr>
+							<tr>
+								<td>1.60-1.65</td>
+								<td>0.9</td>
+								<td>0.80</td>
+								<td>0.2-0.5</td>
+								<td>0.90</td>
+								<td></td>
+								<td></td>
+								<td>&lt; 0.20</td>
+								<td>0.7</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>1.65-1.70</td>
+								<td>0.85</td>
+								<td>0.75</td>
+								<td>0.1-0.2</td>
+								<td>0.85</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+                                                        </tr>
+                                                                <td>1.70-1.75</td>
+								<td>0.8</td>
+								<td>0.7</td>
+								<td>0.05-0.1</td>
+								<td>0.8</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+                                                        </tr>
+                                                        </tr>
+                                                                <td></td>
+								<td></td>
+								<td></td>
+								<td>0.01-0.05</td>
+								<td>0.75</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+                                                        </tr>
+                                                        </tr>
+                                                                <td></td>
+								<td></td>
+								<td></td>
+								<td>0.005-0.01</td>
+								<td>0.70</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+                                                        </tr>
+                                                        </tr>
+                                                                <td></td>
+								<td></td>
+								<td></td>
+								<td>0.001-0.005</td>
+								<td>0.65</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+
+						</table>
+					</div>
+					<div id="table2" class="sidebar-container">
+						<table>
+							<caption>Table 2</caption>
+							<tr>
+								<th colspan="2">BD (Mgm<sup>-3</sup>)
+								</th>
+								<th colspan="2">Sat HC (cm h<sup>-1</sup>)
+								</th>
+								<th colspan="2">AWRC (cm m<sup>-1</sup>)
+								</th>
+								<th colspan="2">OC (%)</th>
+								<th colspan="2">NCP (%)</th>
+							</tr>
+							<tr>
+								<th>Range</th>
+								<th>Rating</th>
+								<th>Range</th>
+								<th>Rating</th>
+								<th>Range</th>
+								<th>Rating</th>
+								<th>Range</th>
+								<th>Rating</th>
+								<th>Range</th>
+								<th>Rating</th>
+							</tr>
+							<tr>
+								<td>1.0-1.20</td>
+								<td>0.65</td>
+								<td>0.005-0.10</td>
+								<td>1.00</td>
+								<td>&gt;15.0</td>
+								<td>1.00</td>
+								<td>&lt; 0.60</td>
+								<td>1.00</td>
+								<td>2.5-5.0</td>
+								<td>1.00</td>
+							</tr>
+							<tr>
+								<td>1.2-1.30 </td>
+								<td>0.75</td>
+								<td>0.10-0.20</td>
+								<td>0.95</td>
+								<td>12.5-15.0</td>
+								<td>0.95</td>
+								<td>0.60-0.90</td>
+								<td>0.95</td>
+								<td>5.0-10.0</td>
+								<td>0.95</td>
+							</tr>
+							<tr>
+								<td>1.30-1.45 and 1.70-1.75</td>
+								<td>0.85</td>
+								<td>0.20-0.50</td>
+								<td>0.90</td>
+								<td>10.0-12.5</td>
+								<td>0.90</td>
+								<td>0.9-1.20</td>
+								<td>0.90</td>
+								<td>10.0-12.5</td>
+								<td>0.90</td>
+							</tr>
+							<tr>
+								<td>1.45-1.50 and 1.65-1.70</td>
+								<td>0.9</td>
+								<td>0.50-1.00</td>
+								<td>0.85</td>
+								<td>7.5-10.0</td>
+								<td>0.80</td>
+								<td>&gt;1.20</td>
+								<td>0.85</td>
+								<td>12.5-15.0</td>
+								<td>0.85</td>
+							</tr>
+							<tr>
+								<td>1.5-1.55 and 1.60-1.65</td>
+								<td>0.95</td>
+								<td>1.00-3.00</td>
+								<td>0.80</td>
+								<td>5.0-7.5</td>
+								<td>0.75</td>
+								<td></td>
+								<td></td>
+								<td>&gt; 15.0</td>
+								<td>0.80</td>
+                                                       </tr>
+							<tr>
+								<td>1.55-1.60</td>
+								<td>1.0</td>
+								<td>3.00-30.0</td>
+								<td>0.7</td>
+								<td>2.5-5.0</td>
+								<td>0.70</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+                                                        </tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>&gt; 30.0</td>
+								<td>0.6</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+					<div id="pramila" class="sidebar-container">
+						<h3>Dr. Pramila Aggarwal</h3>
+						<p>Qualifications and about author.</p>
+					</div>
+				</div>
+			</div>
+			<div id="calculator" class="row">
+				<h3>Calculator</h3>
+				<div class="span3">
+					<div class="well sidebar-nav">
+						<ul class="nav nav-list">
+							<li class="nav-header">Type1</li>
+							<li id="coarse"><a href="#cal1" data-block="cal1">Coarse
+									Texture</a></li>
+							<li id="fine"><a href="#cal2" data-block="cal2">Fine
+									Texture</a></li>
+						</ul>
+						<ul class="nav nav-list">
+							<li class="nav-header">Type2</li>
+							<li id="second"><a href="#cal3" data-block="cal3">SecondType</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="op span3">
+					<div id="cal1">
+						<div id="calculatingForm" class="well sidebar-nav">
+							<table>
+								<tr>
+									<th>Variable</th>
+									<th>Input</th>
+									<th>Rating</th>
+								</tr>
+								<tr>
+									<td>BD</td>
+									<td><input type="text" class="var" id="var1" name="var1"
+										onBlur="validate_1()"></td>
+									<td id="bd1"></td>
+								</tr>
+								<tr>
+									<td>AWRC</td>
+									<td><input type="text" class="var" id="var2" name="var2"
+										onBlur="validate_2()"></td>
+									<td id="awrc1"></td>
+								</tr>
+								<tr>
+									<td>HC</td>
+									<td><input type="text" class="var" id="var3" name="var3"
+										onBlur="validate_3()"></td>
+									<td id="hc1"></td>
+								</tr>
+								<tr>
+									<td>OC</td>
+									<td><input type="text" class="var" id="var4" name="var4"
+										onBlur="validate_4()"></td>
+									<td id="oc1"></td>
+								</tr>
+								<tr>
+									<td>NCP</td>
+									<td><input type="text" class="var" id="var5" name="var5"
+										onBlur="validate_5()"></td>
+									<td id="ncp1"></td>
+								</tr>
+								<tr>
+									<td>PI</td>
+									<td></td>
+									<td id="pi1"></td>
+								</tr>
+							</table>
+
+							<div class="form-actions">
+								<button type="submit" class="btn btn-large btn-primary"
+									onClick="getRating1()">Calculate Rating</button>
+							</div>
+						</div>
+					</div>
+					<div id="cal2">
+						<div id="calculatingForm" class="well sidebar-nav">
+							<table>
+								<tr>
+									<th>Variable</th>
+									<th>Input</th>
+									<th>Rating</th>
+								</tr>
+								<tr>
+									<td>BD</td>
+									<td><input type="text" class="var" id="var6" name="var6"
+										onBlur="validate_6()"></td>
+									<td id="bd2"></td>
+								</tr>
+								<tr>
+									<td>AWRC</td>
+									<td><input type="text" class="var" id="var7" name="var7"
+										onBlur="validate_7()"></td>
+									<td id="awrc2"></td>
+								</tr>
+								<tr>
+									<td>HC</td>
+									<td><input type="text" class="var" id="var8" name="var8"
+										onBlur="validate_8()"></td>
+									<td id="hc2"></td>
+								</tr>
+								<tr>
+									<td>OC</td>
+									<td><input type="text" class="var" id="var9" name="var9"
+										onBlur="validate_9()"></td>
+									<td id="oc2"></td>
+								</tr>
+								<tr>
+									<td>NCP</td>
+									<td><input type="text" class="var" id="var10" name="var10"
+										onBlur="validate_10()"></td>
+									<td id="ncp2"></td>
+								</tr>
+								<tr>
+									<td>PI</td>
+									<td></td>
+									<td id="pi2"></td>
+								</tr>
+							</table>
+
+							<div class="form-actions">
+								<button type="submit" class="btn btn-large btn-primary"
+									onClick="getRating2()">Calculate Rating</button>
+							</div>
+						</div>
+					</div>
+
+					<div id="cal3">
+						<div id="calculatingForm" class="well sidebar-nav">
+							<table>
+								<tr>
+									<th>Variable</th>
+									<th>Input</th>
+									<th>Rating</th>
+								</tr>
+								<tr>
+									<td>BD</td>
+									<td><input type="text" class="var" id="var11" name="var11"
+										onBlur="validate_11()"></td>
+									<td id="bd3"></td>
+								</tr>
+								<tr>
+									<td>AWRC</td>
+									<td><input type="text" class="var" id="var12" name="var12"
+										onBlur="validate_12()"></td>
+									<td id="awrc3"></td>
+								</tr>
+								<tr>
+									<td>HC</td>
+									<td><input type="text" class="var" id="var13" name="13"
+										onBlur="validate_13()"></td>
+									<td id="hc3"></td>
+								</tr>
+								<tr>
+									<td>OC</td>
+									<td><input type="text" class="var" id="var14" name="var14"
+										onBlur="validate_14()"></td>
+									<td id="oc3"></td>
+								</tr>
+								<tr>
+									<td>NCP</td>
+									<td><input type="text" class="var" id="var15" name="var15"
+										onBlur="validate_15()"></td>
+									<td id="ncp3"></td>
+								</tr>
+								<tr>
+									<td>PI</td>
+									<td></td>
+									<td id="pi3"></td>
+								</tr>
+							</table>
+
+							<div class="form-actions">
+								<button type="submit" class="btn btn-large btn-primary"
+									onClick="getRating3()">Calculate Rating</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+	<!-- footer -->
+	<footer class="footer">
+		<div class="container">
+			<p>
+				Designed and built by <a
+					href="https://www.facebook.com/shreeprabha.aries">Shreeprabha
+					Aggarwal</a>.
+			</p>
+			<p>
+				Code licensed under <a
+					href="http://www.apache.org/licenses/LICENSE-2.0">Apache
+					License v2.0</a>, GitHub source <a
+					href="http://creativecommons.org/licenses/by/3.0/">GitHub</a>.
+			</p>
+		</div>
+	</footer>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
